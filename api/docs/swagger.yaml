@@ -1,0 +1,965 @@
+definitions:
+  handler.Response:
+    properties:
+      data: {}
+      description:
+        type: string
+      status:
+        type: integer
+    type: object
+  models.Airport:
+    properties:
+      adress:
+        type: string
+      city:
+        type: string
+      city_id:
+        type: string
+      code:
+        type: string
+      country:
+        type: string
+      country_id:
+        type: string
+      created_at:
+        type: string
+      gmt:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      product_count:
+        type: integer
+      radius:
+        type: string
+      search_text:
+        type: string
+      timezone_id:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.City:
+    properties:
+      city_code:
+        type: string
+      country_id:
+        type: string
+      country_name:
+        type: string
+      created_at:
+        type: string
+      guid:
+        type: string
+      latitude:
+        type: string
+      longitude:
+        type: string
+      offset:
+        type: string
+      timezone_id:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.Country:
+    properties:
+      code:
+        type: string
+      continent:
+        type: string
+      created_at:
+        type: string
+      guid:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.CreateAirport:
+    properties:
+      adress:
+        type: string
+      city:
+        type: string
+      city_id:
+        type: string
+      code:
+        type: string
+      country:
+        type: string
+      country_id:
+        type: string
+      gmt:
+        type: string
+      image:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      product_count:
+        type: integer
+      radius:
+        type: string
+      search_text:
+        type: string
+      timezone_id:
+        type: string
+      title:
+        type: string
+    type: object
+  models.CreateCity:
+    properties:
+      city_code:
+        type: string
+      country_id:
+        type: string
+      country_name:
+        type: string
+      latitude:
+        type: string
+      longitude:
+        type: string
+      offset:
+        type: string
+      timezone_id:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.CreateCountry:
+    properties:
+      code:
+        type: string
+      continent:
+        type: string
+      guid:
+        type: string
+      title:
+        type: string
+    type: object
+  models.GetListAirportResponse:
+    properties:
+      airports:
+        items:
+          $ref: '#/definitions/models.Airport'
+        type: array
+      count:
+        type: integer
+    type: object
+  models.GetListCityResponse:
+    properties:
+      cities:
+        items:
+          $ref: '#/definitions/models.City'
+        type: array
+      count:
+        type: integer
+    type: object
+  models.GetListCountryResponse:
+    properties:
+      count:
+        type: integer
+      countries:
+        items:
+          $ref: '#/definitions/models.Country'
+        type: array
+    type: object
+  models.UpdateAirport:
+    properties:
+      adress:
+        type: string
+      city:
+        type: string
+      city_id:
+        type: string
+      code:
+        type: string
+      country:
+        type: string
+      country_id:
+        type: string
+      gmt:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      product_count:
+        type: integer
+      radius:
+        type: string
+      search_text:
+        type: string
+      timezone_id:
+        type: string
+      title:
+        type: string
+    type: object
+  models.UpdateCity:
+    properties:
+      city_code:
+        type: string
+      country_id:
+        type: string
+      country_name:
+        type: string
+      guid:
+        type: string
+      latitude:
+        type: string
+      longitude:
+        type: string
+      offset:
+        type: string
+      timezone_id:
+        type: string
+      title:
+        type: string
+    type: object
+  models.UpdateCountry:
+    properties:
+      code:
+        type: string
+      continent:
+        type: string
+      guid:
+        type: string
+      title:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /airport:
+    get:
+      consumes:
+      - application/json
+      description: Get List of Airports
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetListAirportResponseBody
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.GetListAirportResponse'
+              type: object
+      summary: Get List of Airports
+      tags:
+      - Airport
+    post:
+      consumes:
+      - application/json
+      description: Create Airport
+      parameters:
+      - description: CreateAirportRequestBody
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateAirport'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: AirportBody
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Airport'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Create Airport
+      tags:
+      - Airport
+  /airport/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Airport
+      parameters:
+      - description: Airport ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Delete Airport
+      tags:
+      - Airport
+    get:
+      consumes:
+      - application/json
+      description: Get Airportby ID
+      parameters:
+      - description: Airport ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: AirportBody
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Airport'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get Airport by ID
+      tags:
+      - Airport
+    put:
+      consumes:
+      - application/json
+      description: Update Airport
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: UpdateAirportRequestBody
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateAirport'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Updated
+          schema:
+            type: string
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Update Airport
+      tags:
+      - Airport
+  /city:
+    get:
+      consumes:
+      - application/json
+      description: Get List of cities
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetListCityResponseBody
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.GetListCityResponse'
+              type: object
+      summary: Get List of cities
+      tags:
+      - City
+    post:
+      consumes:
+      - application/json
+      description: Create City
+      parameters:
+      - description: CreateCityRequestBody
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateCity'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: CityBody
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.City'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Create City
+      tags:
+      - City
+  /city/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete City
+      parameters:
+      - description: City ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Delete City
+      tags:
+      - City
+    get:
+      consumes:
+      - application/json
+      description: Get City  by ID
+      parameters:
+      - description: City  ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: City Body
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.City'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get City  by ID
+      tags:
+      - City
+    put:
+      consumes:
+      - application/json
+      description: Update City
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: UpdateCityRequestBody
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateCity'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Updated
+          schema:
+            type: string
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Update City
+      tags:
+      - City
+  /country:
+    get:
+      consumes:
+      - application/json
+      description: Get List of Countries
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetListCountryResponseBody
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.GetListCountryResponse'
+              type: object
+      summary: Get List of Countries
+      tags:
+      - Country
+    post:
+      consumes:
+      - application/json
+      description: Create Country
+      parameters:
+      - description: CreateCountryRequestBody
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateCountry'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: CountryBody
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Country'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Create Country
+      tags:
+      - Country
+  /country/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Country
+      parameters:
+      - description: Country ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Delete Country
+      tags:
+      - Country
+    get:
+      consumes:
+      - application/json
+      description: Get Country by ID
+      parameters:
+      - description: Country ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: CountryBody
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Country'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get Country by ID
+      tags:
+      - Country
+    put:
+      consumes:
+      - application/json
+      description: Update Country
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: UpdateCountryRequestBody
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateCountry'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Updated
+          schema:
+            type: string
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Update Country
+      tags:
+      - Country
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Загрузка городов из файла
+      parameters:
+      - description: Файл JSON с городами
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Файл успешно загружен
+          schema:
+            type: string
+        "400":
+          description: Неверный аргумент
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Ошибка сервера
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Загрузка городов
+      tags:
+      - City
+  /upload/{table_slug}:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Загрузка стран из файла
+      parameters:
+      - description: Файл JSON с городами
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Файл успешно загружен
+          schema:
+            type: string
+        "400":
+          description: Неверный аргумент
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Ошибка сервера
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Загрузка стран
+      tags:
+      - Country
+  /upload/airport:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Загрузка аэропортов из файла
+      parameters:
+      - description: Файл JSON с аэропортами
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Файл успешно загружен
+          schema:
+            type: string
+        "400":
+          description: Неверный аргумент
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Ошибка сервера
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Загрузка аэропортов
+      tags:
+      - Airport
+swagger: "2.0"
